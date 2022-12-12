@@ -1,0 +1,9 @@
+name: viirsbounds
+channels:
+  - conda-forge
+dependencies:
+  - python=3
+  - h5py
+  - geojson
+  - typer
+  - pyinstaller
