@@ -78,7 +78,7 @@ def main(geolocation_file:Path = typer.Argument(
 
     geojson_filename = geolocation_file.name.replace('.h5', f".stride{stride_by}.json")
     with open(geojson_filename, 'w') as geojson_file:
-        geojson_file.write(geojson.dumps(polygon))
+        geojson.dump(polygon, geojson_file)
 
     print(f"GeoJSON output: {geojson_filename}")
     del f
