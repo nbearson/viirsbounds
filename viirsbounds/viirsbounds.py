@@ -65,8 +65,6 @@ def main(geolocation_file:Path = typer.Argument(
 
     dslat = f[f"All_Data/{geogroup}/Latitude"]
     dslon = f[f"All_Data/{geogroup}/Longitude"] # shape like (768, 3200)
-#    lat_strided = dslat[0::stride_by,0::stride_by]
-#    lon_strided = dslon[0::stride_by,0::stride_by] # shape like (48, 200)
     lat_polygon = bounded_polygon_from_dataset(dslat, stride=stride_by)
     lon_polygon = bounded_polygon_from_dataset(dslon, stride=stride_by)
 
