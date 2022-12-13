@@ -55,7 +55,7 @@ def main(geolocation_file:Path = typer.Argument(
                                      readable=True,
                                      resolve_path=True,
                                  ),
-         stride_by:int = typer.Option(default=16)
+         stride_by:int = typer.Option(default=128)
         ):
 
     print(f"Geolocation file: {geolocation_file}")
