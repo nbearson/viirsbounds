@@ -20,7 +20,7 @@ def geo_group_from_filename(filename:Path):
     for key in TAG2GROUP.keys():
         if key in filename.stem:
             return TAG2GROUP[key]
-    raise RuntimeError
+    raise RuntimeError(f"{filename} does not look like any VIIRS geolocation file we know about")
 
 def bounded_polygon_from_dataset(ds, stride:int):
     # get bounding polygon via something like:
