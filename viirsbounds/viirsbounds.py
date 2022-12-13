@@ -71,8 +71,10 @@ def main(geolocation_file:Path = typer.Argument(
     lon_polygon = bounded_polygon_from_dataset(dslon, stride=stride_by)
 
     # a.astype(float) fixes geojson not knowing about numpy types, otherwise: "ValueError: -79.11869 is not a JSON compliant number"
-    coords = zip(lon_polygon.astype(float), lat_polygon.astype(float))
-    polygon = geojson.Polygon(coords)
+    coords = list(zip(lon_polygon.astype(float), lat_polygon.astype(float)))
+
+    # wrapping in another set of [ ] fixes an issue where we didn't have enough [ ] wrapping the resulting geojson coordinates
+    polygon = geojson.Polygon([coords])
 
     geojson_filename = geolocation_file.name.replace('.h5', f".stride{stride_by}.json")
     with open(geojson_filename, 'w') as geojson_file:
