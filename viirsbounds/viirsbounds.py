@@ -25,14 +25,25 @@ def geo_group_from_filename(filename:Path):
 def bounded_polygon_from_dataset(ds, stride:int):
     # get bounding polygon via something like:
     # I believe order of operations here is important for it to go around in a rectangle
-    # longitude[0,:]
-    # longitude[:,-1]
-    # longitude[-1,:]
+    # furthermore, it has to go in a certain order to obey the "right-hand rule", where the
+    # interior of the polygon is to the right of the drawn lines
     # longitude[:,0]
-    strided = np.concatenate(( ds[0,::stride],
-                               ds[::stride,-1],
-                               ds[-1,::stride],
-                               ds[::stride,0] ))
+    # longitude[-1,:]
+    # longitude[:,-1] (but in reverse)
+    # longitude[0,:] (but in reverse)
+
+    strided = np.concatenate((
+                                [ds[0,0]],
+                                ds[::stride,0],
+                                [ds[-1,0]],
+                                ds[-1,::stride],
+                                [ds[-1,-1]],
+                                np.flip(ds[::stride,-1]),
+                                [ds[0,-1]],
+                                np.flip(ds[0,::stride]),
+                                [ds[0,0]], # we need to repeat the first point                                
+    ))
+
     return strided
 
 
